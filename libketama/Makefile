@@ -1,3 +1,12 @@
+MACHINE := $(shell uname -m)
+
+ifeq ($(MACHINE), x86_64)
+libdir = /usr/lib64
+endif
+ifeq ($(MACHINE), i686)
+libdir = /usr/lib
+endif
+
 PREFIX=$(DESTDIR)/usr
 CFLAGS+=-fPIC -W -Wall -Werror
 
@@ -17,10 +26,10 @@ test: build
 	@./downed_server_test.sh
 
 install:
-	install -d $(PREFIX)/lib $(PREFIX)/include
-	install libketama.so.1 $(PREFIX)/lib/
+	install -d $(PREFIX)/$(libdir)$(PREFIX)/include
+	install libketama.so.1 $(PREFIX)/$(libdir)/
 	install ketama.h $(PREFIX)/include/
-	cd ${PREFIX}/lib && ln -sf libketama.so.1 libketama.so
+	cd ${PREFIX}/$(libdir)&& ln -sf libketama.so.1 libketama.so
 
 clean:
 	rm -f *.o
@@ -29,7 +38,7 @@ clean:
 	rm -f build-stamp configure-stamp
 
 uninstall:
-	rm $(PREFIX)/lib/libketama.so.1
+	rm $(PREFIX)/$(libdir)/libketama.so.1
 	rm $(PREFIX)/include/ketama.h
 
 deinstall: uninstall
