@@ -26,7 +26,7 @@ test: build
 	@./downed_server_test.sh
 
 install:
-	install -d $(PREFIX)/$(libdir)$(PREFIX)/include
+	install -d $(PREFIX)/$(libdir) $(PREFIX)/include
 	install libketama.so.1 $(PREFIX)/$(libdir)/
 	install ketama.h $(PREFIX)/include/
 	cd ${PREFIX}/$(libdir)&& ln -sf libketama.so.1 libketama.so
