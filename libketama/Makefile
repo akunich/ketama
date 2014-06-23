@@ -1,10 +1,10 @@
 MACHINE := $(shell uname -m)
 
 ifeq ($(MACHINE), x86_64)
-libdir = /usr/lib64
+libdir = lib64
 endif
 ifeq ($(MACHINE), i686)
-libdir = /usr/lib
+libdir = lib
 endif
 
 PREFIX=$(DESTDIR)/usr
