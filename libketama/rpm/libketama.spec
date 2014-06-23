@@ -17,7 +17,6 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 %prep
 %setup -q
 
-
 %build
 #%%configure
 cd libketama
@@ -37,8 +36,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 /usr/include/ketama.h
-/usr/lib/libketama.so
-/usr/lib/libketama.so.1
+%{_libdir}/libketama.so
+%{_libdir}/libketama.so.1
 
 
 
