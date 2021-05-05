@@ -23,7 +23,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <ketama.h>
 #define LIB_NAME "ketama"
 #define MT_NAME "KETAMA_MT"
-
+#if !defined LUA_VERSION_NUM
+/* Lua 5.0 */
+#define luaL_Reg luaL_reg
+#endif
 
 typedef struct{
 	ketama_continuum *cont;
@@ -130,8 +133,8 @@ lketama_md5digest(lua_State *L){
 	return 1;
 }
 
-static luaL_reg pfuncs[] = { {"roll", lketama_roll}, {NULL, NULL} };
-static luaL_reg mmethods[] = {
+static luaL_Reg pfuncs[] = { {"roll", lketama_roll}, {NULL, NULL} };
+static luaL_Reg mmethods[] = {
 	{"smoke",				lketama_smoke},
 	{"get_server",			lketama_get_server},
 	{"print_continuum",	lketama_print_continuum},
@@ -144,7 +147,7 @@ static luaL_reg mmethods[] = {
 #define register_constant(s) lua_pushinteger(L,s); lua_setfield(L, -2, #s);
 int luaopen_ketama(lua_State *L){
 	luaL_newmetatable(L, MT_NAME);
-	lua_createtable(L, 0, sizeof(mmethods) / sizeof(luaL_reg) -1);
+	lua_createtable(L, 0, sizeof(mmethods) / sizeof(luaL_Reg) -1);
 	luaL_register(L, NULL, mmethods);
 	lua_setfield(L, -2, "__index");
 
